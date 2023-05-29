@@ -4,6 +4,7 @@ using DataAccessLayer.Repositories.Interfaces;
 using LogicLayer.Services.Interfaces;
 using LogicLayer.Services.Implementation;
 using Microsoft.EntityFrameworkCore;
+using CinemaApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<CinemaContext>(options =>
 
 // Add services to the container
 builder.Services.AddControllers();
+
+builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
@@ -43,6 +46,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.MapControllers();
 

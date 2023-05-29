@@ -20,93 +20,41 @@ namespace CinemaApi.Controllers
         [HttpPost]
         public async Task<IActionResult> AddDirector(AddDirectorDto request)
         {
-            try
-            {
-                var result = await _service.AddDirectorAsync(request);
-                _logger.Log(LogLevel.Information, $"Director {request.FullName} added");
-                return Created(Request.GetEncodedUrl(), result);
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(LogLevel.Error, ex.Message);
-                return BadRequest(ex.Message);
-            }
+            var result = await _service.AddDirectorAsync(request);
+            _logger.Log(LogLevel.Information, $"Director {request.FullName} added");
+            return Created(Request.GetEncodedUrl(), result);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetDirectors()
         {
-            try
-            {
-                var directors = await _service.GetDirectorsAsync();
-                _logger.Log(LogLevel.Information, $"All directors retrieved({directors.Count})");
-                return Ok(directors);
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(LogLevel.Error, ex.Message);
-
-                if (ex.Message == "Directors are empty")
-                    return NoContent();
-                return BadRequest(ex.Message);
-            }
+            var directors = await _service.GetDirectorsAsync();
+            _logger.Log(LogLevel.Information, $"All directors retrieved({directors.Count})");
+            return Ok(directors);
         }
 
         [HttpGet, Route("requestId")]
         public async Task<IActionResult> GetDirector([Required] Guid requestId)
         {
-            try
-            {
-                var director = await _service.GetDirectorAsync(requestId);
-                _logger.Log(LogLevel.Information, $"{requestId} director retrieved");
-                return Ok(director);
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(LogLevel.Error, ex.Message);
-
-                if (ex.Message == "Director does not exist")
-                    return NotFound(requestId);
-                return BadRequest(ex.Message);
-            }
+            var director = await _service.GetDirectorAsync(requestId);
+            _logger.Log(LogLevel.Information, $"{requestId} director retrieved");
+            return Ok(director);
         }
 
         [HttpPut]
         public async Task<IActionResult> ChangeDirector(ChangeDirectorDto request)
         {
-            try
-            {
-                await _service.ChangeDirectorAsync(request);
-                _logger.Log(LogLevel.Information, "Director changed");
-                return Ok("Director changed");
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(LogLevel.Error, ex.Message);
-
-                if (ex.Message == "Director does not exist")
-                    return NotFound(request.Id);
-                return BadRequest(ex.Message);
-            }
+            await _service.ChangeDirectorAsync(request);
+            _logger.Log(LogLevel.Information, "Director changed");
+            return Ok("Director changed");
         }
 
         [HttpDelete, Route("requestId")]
         public async Task<IActionResult> DeleteDirector([Required] Guid requestId)
         {
-            try
-            {
-                await _service.DeleteDirectorAsync(requestId);
-                _logger.Log(LogLevel.Information, $"{requestId} Director deleted");
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(LogLevel.Error, ex.Message);
-
-                if (ex.Message == "Director does not exist")
-                    return NotFound(requestId);
-                return BadRequest(ex.Message);
-            }
+            await _service.DeleteDirectorAsync(requestId);
+            _logger.Log(LogLevel.Information, $"{requestId} Director deleted");
+            return NoContent();
         }
     }
 }

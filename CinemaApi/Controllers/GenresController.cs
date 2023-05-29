@@ -21,93 +21,41 @@ namespace CinemaApi.Controllers
         [HttpPost]
         public async Task<IActionResult> AddGenre(AddGenreDto request)
         {
-            try
-            {
-                var result = await _service.AddGenreAsync(request);
-                _logger.Log(LogLevel.Information, $"Genre {request.Name} added");
-                return Created(Request.GetEncodedUrl(), result);
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(LogLevel.Error, ex.Message);
-                return BadRequest(ex.Message);
-            }
+            var result = await _service.AddGenreAsync(request);
+            _logger.Log(LogLevel.Information, $"Genre {request.Name} added");
+            return Created(Request.GetEncodedUrl(), result);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetGenres()
         {
-            try
-            {
-                var genres = await _service.GetGenresAsync();
-                _logger.Log(LogLevel.Information, $"All genres retrieved({genres.Count})");
-                return Ok(genres);
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(LogLevel.Error, ex.Message);
-
-                if (ex.Message == "Genres are empty")
-                    return NoContent();
-                return BadRequest(ex.Message);
-            }
+            var genres = await _service.GetGenresAsync();
+            _logger.Log(LogLevel.Information, $"All genres retrieved({genres.Count})");
+            return Ok(genres);
         }
 
         [HttpGet, Route("requestId")]
         public async Task<IActionResult> GetGenre([Required] Guid requestId)
         {
-            try
-            {
-                var genre = await _service.GetGenreAsync(requestId);
-                _logger.Log(LogLevel.Information, $"{requestId} genre retrieved");
-                return Ok(genre);
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(LogLevel.Error, ex.Message);
-
-                if (ex.Message == "Genre does not exist")
-                    return NotFound();
-                return BadRequest(ex.Message);
-            }
+            var genre = await _service.GetGenreAsync(requestId);
+            _logger.Log(LogLevel.Information, $"{requestId} genre retrieved");
+            return Ok(genre);
         }
 
         [HttpPut]
         public async Task<IActionResult> ChangeGenre(ChangeGenreDto request)
         {
-            try
-            {
-                await _service.ChangeGenreAsync(request);
-                _logger.Log(LogLevel.Information, "Genre changed");
-                return Ok("Genre changed");
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(LogLevel.Error, ex.Message);
-
-                if (ex.Message == "Genre does not exist")
-                    return NotFound();
-                return BadRequest(ex.Message);
-            }
+            await _service.ChangeGenreAsync(request);
+            _logger.Log(LogLevel.Information, "Genre changed");
+            return Ok("Genre changed");
         }
 
         [HttpDelete, Route("requestId")]
         public async Task<IActionResult> DeleteGenre([Required] Guid requestId)
         {
-            try
-            {
-                await _service.DeleteGenreAsync(requestId);
-                _logger.Log(LogLevel.Information, $"{requestId} Genre deleted");
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(LogLevel.Error, ex.Message);
-
-                if (ex.Message == "Genre does not exist")
-                    return NotFound(requestId);
-                return BadRequest(ex.Message);
-            }
+            await _service.DeleteGenreAsync(requestId);
+            _logger.Log(LogLevel.Information, $"{requestId} Genre deleted");
+            return NoContent();
         }
     }
 }
