@@ -3,6 +3,7 @@ using LogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace CinemaApi.Controllers
 {
@@ -21,40 +22,110 @@ namespace CinemaApi.Controllers
         public async Task<IActionResult> AddDirector(AddDirectorDto request)
         {
             var result = await _service.AddDirectorAsync(request);
-            _logger.Log(LogLevel.Information, $"Director {request.FullName} added");
-            return Created(Request.GetEncodedUrl(), result);
+
+            if (result.StatusCode is HttpStatusCode.Created)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl() + "/" + result.Data.Id);
+
+                return Created(Request.GetEncodedUrl() + "/" + result.Data.Id, result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetDirectors()
         {
-            var directors = await _service.GetDirectorsAsync();
-            _logger.Log(LogLevel.Information, $"All directors retrieved({directors.Count})");
-            return Ok(directors);
+            var result = await _service.GetDirectorsAsync();
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpGet, Route("requestId")]
         public async Task<IActionResult> GetDirector([Required] Guid requestId)
         {
-            var director = await _service.GetDirectorAsync(requestId);
-            _logger.Log(LogLevel.Information, $"{requestId} director retrieved");
-            return Ok(director);
+            var result = await _service.GetDirectorAsync(requestId);
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpPut]
         public async Task<IActionResult> ChangeDirector(ChangeDirectorDto request)
         {
-            await _service.ChangeDirectorAsync(request);
-            _logger.Log(LogLevel.Information, "Director changed");
-            return Ok("Director changed");
+            var result = await _service.ChangeDirectorAsync(request);
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpDelete, Route("requestId")]
         public async Task<IActionResult> DeleteDirector([Required] Guid requestId)
         {
-            await _service.DeleteDirectorAsync(requestId);
-            _logger.Log(LogLevel.Information, $"{requestId} Director deleted");
-            return NoContent();
+            var result = await _service.DeleteDirectorAsync(requestId);
+
+            if (result.StatusCode is HttpStatusCode.NoContent)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return NoContent();
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
     }
 }

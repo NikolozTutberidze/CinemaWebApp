@@ -20,16 +20,14 @@ namespace DataAccessLayer.Repositories.Implementation
             await _database.SaveChangesAsync();
         }
 
-        public async Task AddMovieActorsAsync(List<MovieActor> movieActors)
+        public void AddMovieActorsAsync(List<MovieActor> movieActors)
         {
             _database.MoviesActors.AddRange(movieActors);
-            await _database.SaveChangesAsync();
         }
 
-        public async Task AddMovieGenresAsync(List<MovieGenre> movieGenres)
+        public void AddMovieGenresAsync(List<MovieGenre> movieGenres)
         {
             _database.MoviesGenres.AddRange(movieGenres);
-            await _database.SaveChangesAsync();
         }
 
         public async Task ChangeMovieAsync(Movie request)
@@ -44,21 +42,19 @@ namespace DataAccessLayer.Repositories.Implementation
             await _database.SaveChangesAsync();
         }
 
-        public async Task DeleteMovieActorAsync(MovieActor request)
+        public void DeleteMovieActorsAsync(List<MovieActor> request)
         {
-            _database.MoviesActors.Remove(request);
-            await _database.SaveChangesAsync();
+            _database.MoviesActors.RemoveRange(request);
         }
 
-        public async Task DeleteMovieGenreAsync(MovieGenre request)
+        public void DeleteMovieGenresAsync(List<MovieGenre> request)
         {
-            _database.MoviesGenres.Remove(request);
-            await _database.SaveChangesAsync();
+            _database.MoviesGenres.RemoveRange(request);
         }
 
         public async Task<Movie> GetMovieByIdAsync(Guid requestId)
         {
-            var movie = await _database.Movies.Where(m => m.Id == requestId).FirstOrDefaultAsync();
+            var movie = await _database.Movies.FirstOrDefaultAsync(m => m.Id == requestId);
             return movie;
         }
 

@@ -32,7 +32,7 @@ namespace DataAccessLayer.Repositories.Implementation
 
         public async Task<Director> GetDirectorAsync(Guid requestId)
         {
-            var director = await _database.Directors.Where(d => d.Id == requestId).FirstOrDefaultAsync();
+            var director = await _database.Directors.FirstOrDefaultAsync(d => d.Id == requestId);
             return director;
         }
 

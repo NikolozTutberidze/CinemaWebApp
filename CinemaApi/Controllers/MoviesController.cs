@@ -1,8 +1,10 @@
-﻿using LogicLayer.Dtos;
+﻿using Azure.Core;
+using LogicLayer.Dtos;
 using LogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace CinemaApi.Controllers
 {
@@ -22,65 +24,176 @@ namespace CinemaApi.Controllers
         public async Task<IActionResult> AddMovie(AddMovieDto request)
         {
             var result = await _service.AddMovieAsync(request);
-            _logger.Log(LogLevel.Information, $"Movie {request.Title} added");
-            return Created(Request.GetEncodedUrl(), result);
+
+            if (result.StatusCode is HttpStatusCode.Created)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl() + "/" + result.Data.Id);
+
+                return Created(Request.GetEncodedUrl() + "/" + result.Data.Id, result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetMovies()
         {
-            var movies = await _service.GetMoviesAsync();
-            _logger.Log(LogLevel.Information, $"All movies retrieved({movies.Count})");
-            return Ok(movies);
+            var result = await _service.GetMoviesAsync();
 
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpGet, Route("requestId")]
         public async Task<IActionResult> GetMovieById([Required] Guid requestId)
         {
-            var movie = await _service.GetMovieByIdAsync(requestId);
-            _logger.Log(LogLevel.Information, $"{requestId} movie retrieved");
-            return Ok(movie);
+            var result = await _service.GetMovieByIdAsync(requestId);
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpGet, Route("request")]
         public async Task<IActionResult> GetMovieByTitle([Required] string request)
         {
-            var movies = await _service.GetMovieByTitleAsync(request);
-            _logger.Log(LogLevel.Information, $"{request} movies retrieved");
-            return Ok(movies);
+            var result = await _service.GetMoviesByTitleAsync(request);
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpGet, Route("By-IMDB-Rating")]
         public async Task<IActionResult> GetMovieByIMDBRating([Required] double firstRating, [Required] double secondRating)
         {
-            var movies = await _service.GetMovieByIMDBAsync(firstRating, secondRating);
-            _logger.Log(LogLevel.Information, $"{firstRating}-{secondRating}IMDB movies retrieved");
-            return Ok(movies);
+            var result = await _service.GetMoviesByIMDBAsync(firstRating, secondRating);
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpGet, Route("By-Date")]
         public async Task<IActionResult> GetMovieByDate([Required] int firstDate, [Required] int secondDate)
         {
-            var movies = await _service.GetMovieByYearAsync(firstDate, secondDate);
-            _logger.Log(LogLevel.Information, $"{firstDate}-{secondDate} movies retrieved");
-            return Ok(movies);
+            var result = await _service.GetMoviesByYearAsync(firstDate, secondDate);
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpPut]
         public async Task<IActionResult> ChangeMovie(ChangeMovieDto request)
         {
-            await _service.ChangeMovieAsync(request);
-            _logger.Log(LogLevel.Information, "Movie changed");
-            return Ok("Movie changed");
+            var result = await _service.ChangeMovieAsync(request);
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpDelete, Route("requestId")]
         public async Task<IActionResult> DeleteMovie([Required] Guid requestId)
         {
-            await _service.DeleteMovieAsync(requestId);
-            _logger.Log(LogLevel.Information, $"{requestId} Movie deleted");
-            return NoContent();
+            var result = await _service.DeleteMovieAsync(requestId);
+
+            if (result.StatusCode is HttpStatusCode.NoContent)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return NoContent();
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
     }
 }

@@ -3,6 +3,7 @@ using LogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace CinemaApi.Controllers
 {
@@ -22,40 +23,110 @@ namespace CinemaApi.Controllers
         public async Task<IActionResult> AddGenre(AddGenreDto request)
         {
             var result = await _service.AddGenreAsync(request);
-            _logger.Log(LogLevel.Information, $"Genre {request.Name} added");
-            return Created(Request.GetEncodedUrl(), result);
+
+            if (result.StatusCode is HttpStatusCode.Created)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl() + "/" + result.Data.Id);
+
+                return Created(Request.GetEncodedUrl() + "/" + result.Data.Id, result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetGenres()
         {
-            var genres = await _service.GetGenresAsync();
-            _logger.Log(LogLevel.Information, $"All genres retrieved({genres.Count})");
-            return Ok(genres);
+            var result = await _service.GetGenresAsync();
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpGet, Route("requestId")]
         public async Task<IActionResult> GetGenre([Required] Guid requestId)
         {
-            var genre = await _service.GetGenreAsync(requestId);
-            _logger.Log(LogLevel.Information, $"{requestId} genre retrieved");
-            return Ok(genre);
+            var result = await _service.GetGenreAsync(requestId);
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpPut]
         public async Task<IActionResult> ChangeGenre(ChangeGenreDto request)
         {
-            await _service.ChangeGenreAsync(request);
-            _logger.Log(LogLevel.Information, "Genre changed");
-            return Ok("Genre changed");
+            var result = await _service.ChangeGenreAsync(request);
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpDelete, Route("requestId")]
         public async Task<IActionResult> DeleteGenre([Required] Guid requestId)
         {
-            await _service.DeleteGenreAsync(requestId);
-            _logger.Log(LogLevel.Information, $"{requestId} Genre deleted");
-            return NoContent();
+            var result = await _service.DeleteGenreAsync(requestId);
+
+            if (result.StatusCode is HttpStatusCode.NoContent)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return NoContent();
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
     }
 }

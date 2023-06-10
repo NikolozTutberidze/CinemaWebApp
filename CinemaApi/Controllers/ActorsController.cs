@@ -1,8 +1,11 @@
-﻿using LogicLayer.Dtos;
+﻿using Azure.Core;
+using LogicLayer.Dtos;
+using LogicLayer.Services.CustomResponse;
 using LogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace CinemaApi.Controllers
 {
@@ -22,40 +25,110 @@ namespace CinemaApi.Controllers
         public async Task<IActionResult> AddActor(AddActorDto request)
         {
             var result = await _service.AddActorAsync(request);
-            _logger.Log(LogLevel.Information, $"Actor {request.FullName} added");
-            return Created(Request.GetEncodedUrl(), result);
+
+            if (result.StatusCode is HttpStatusCode.Created)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl() + "/" + result.Data.Id);
+
+                return Created(Request.GetEncodedUrl() + "/" + result.Data.Id, result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetActors()
         {
-            var actors = await _service.GetActorsAsync();
-            _logger.Log(LogLevel.Information, $"All actors retrieved({actors.Count})");
-            return Ok(actors);
+            var result = await _service.GetActorsAsync();
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpGet, Route("id")]
         public async Task<IActionResult> GetActor([Required] Guid id)
         {
-            var actor = await _service.GetActorAsync(id);
-            _logger.Log(LogLevel.Information, $"{id} actor retrieved");
-            return Ok(actor);
+            var result = await _service.GetActorAsync(id);
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpPut]
         public async Task<IActionResult> ChangeActor(ChangeActorDto request)
         {
-            await _service.ChangeActorAsync(request);
-            _logger.Log(LogLevel.Information, "Actor changed");
-            return Ok("Actor changed");
+            var result = await _service.ChangeActorAsync(request);
+
+            if (result.StatusCode is HttpStatusCode.OK)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return Ok(result.Data);
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
 
         [HttpDelete, Route("requestId")]
         public async Task<IActionResult> DeleteActor([Required] Guid requestId)
         {
-            await _service.DeleteActorAsync(requestId);
-            _logger.Log(LogLevel.Information, $"{requestId} Actor deleted");
-            return NoContent();
+            var result = await _service.DeleteActorAsync(requestId);
+
+            if (result.StatusCode is HttpStatusCode.NoContent)
+            {
+                _logger.LogInformation(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString() + '\n'
+                    + '\t' + Request.GetEncodedUrl());
+
+                return NoContent();
+            }
+
+            _logger.LogError(ControllerContext.ActionDescriptor.ControllerName + '\n'
+                    + '\t' + ControllerContext.ActionDescriptor.ActionName + '\n'
+                    + '\t' + result.StatusCode.ToString());
+
+            return StatusCode((int)result.StatusCode, result.Message);
         }
     }
 }

@@ -24,25 +24,30 @@ namespace DataAccessLayer.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Movie>()
+                .HasOne(m => m.Director)
+                .WithMany(d => d.Movies)
+                .HasForeignKey(m => m.DirectorId);
+
             modelBuilder.Entity<MovieActor>().HasKey(ma => new { ma.MovieId, ma.ActorId });
             modelBuilder.Entity<MovieActor>()
-                .HasOne(movie => movie.Movie)
-                .WithMany(ma => ma.MoviesActors)
-                .HasForeignKey(movie => movie.MovieId);
+                .HasOne(ma => ma.Movie)
+                .WithMany(m => m.MoviesActors)
+                .HasForeignKey(ma => ma.MovieId);
             modelBuilder.Entity<MovieActor>()
-                .HasOne(actor => actor.Actor)
-                .WithMany(ma => ma.MoviesActors)
-                .HasForeignKey(actor => actor.ActorId);
+                .HasOne(ma => ma.Actor)
+                .WithMany(a => a.MoviesActors)
+                .HasForeignKey(ma => ma.ActorId);
 
             modelBuilder.Entity<MovieGenre>().HasKey(mg => new { mg.MovieId, mg.GenreId });
             modelBuilder.Entity<MovieGenre>()
-                .HasOne(movie => movie.Movie)
-                .WithMany(mg => mg.MoviesGenres)
-                .HasForeignKey(movie => movie.MovieId);
+                .HasOne(mg => mg.Movie)
+                .WithMany(m => m.MoviesGenres)
+                .HasForeignKey(mg => mg.MovieId);
             modelBuilder.Entity<MovieGenre>()
-                .HasOne(genre => genre.Genre)
-                .WithMany(mg => mg.MoviesGenres)
-                .HasForeignKey(genre => genre.GenreId);
+                .HasOne(mg => mg.Genre)
+                .WithMany(g => g.MoviesGenres)
+                .HasForeignKey(mg => mg.GenreId);
         }
     }
 }

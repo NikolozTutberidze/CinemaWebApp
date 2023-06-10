@@ -34,7 +34,7 @@ namespace DataAccessLayer.Repositories.Implementation
 
         public async Task<Actor> GetActorAsync(Guid requestId)
         {
-            var actor = await _database.Actors.Where(a => a.Id == requestId).FirstOrDefaultAsync();
+            var actor = await _database.Actors.FirstOrDefaultAsync(a => a.Id == requestId);
             return actor;
         }
 

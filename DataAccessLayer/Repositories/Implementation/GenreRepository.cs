@@ -33,7 +33,7 @@ namespace DataAccessLayer.Repositories.Implementation
 
         public async Task<Genre> GetGenreAsync(Guid requestId)
         {
-            var genre = await _database.Genres.Where(g => g.Id == requestId).FirstOrDefaultAsync();
+            var genre = await _database.Genres.FirstOrDefaultAsync(g => g.Id == requestId);
             return genre;
         }
 
