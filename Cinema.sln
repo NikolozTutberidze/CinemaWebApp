@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cinema.Domain", "LogicLayer\Cinema.Domain.csproj", "{1ADD74AD-43DE-47BB-B75A-B70467A50641}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cinema.Application", "Cinema.Application\Cinema.Application.csproj", "{E68588B7-96E3-4699-A53E-F23C2594C836}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cinema.Infrastructure", "DataAccessLayer\Cinema.Infrastructure.csproj", "{687BDDA3-1F4B-4D33-A7C9-4A14A48DB589}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cinema.Infrastructure", "Cinema.Infrastructure\Cinema.Infrastructure.csproj", "{119F10C1-5DFA-4F7F-A010-7A72DC3CD98E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cinema.Api", "CinemaApi\Cinema.Api.csproj", "{AE3C739F-F00F-4B7A-853D-B1A629337F92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cinema.Domain", "Cinema.Domain\Cinema.Domain.csproj", "{3A8FE743-A5FD-4C5F-A7AE-9FFA37E12F8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cinema.Application", "Cinema.Application\Cinema.Application.csproj", "{E68588B7-96E3-4699-A53E-F23C2594C836}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cinema.Api", "Cinema.Api\Cinema.Api.csproj", "{85170B3E-D4A5-420E-BBA8-C7D8DE8FECFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,22 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1ADD74AD-43DE-47BB-B75A-B70467A50641}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1ADD74AD-43DE-47BB-B75A-B70467A50641}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1ADD74AD-43DE-47BB-B75A-B70467A50641}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1ADD74AD-43DE-47BB-B75A-B70467A50641}.Release|Any CPU.Build.0 = Release|Any CPU
-		{687BDDA3-1F4B-4D33-A7C9-4A14A48DB589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{687BDDA3-1F4B-4D33-A7C9-4A14A48DB589}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{687BDDA3-1F4B-4D33-A7C9-4A14A48DB589}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{687BDDA3-1F4B-4D33-A7C9-4A14A48DB589}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE3C739F-F00F-4B7A-853D-B1A629337F92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE3C739F-F00F-4B7A-853D-B1A629337F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE3C739F-F00F-4B7A-853D-B1A629337F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE3C739F-F00F-4B7A-853D-B1A629337F92}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E68588B7-96E3-4699-A53E-F23C2594C836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E68588B7-96E3-4699-A53E-F23C2594C836}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E68588B7-96E3-4699-A53E-F23C2594C836}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E68588B7-96E3-4699-A53E-F23C2594C836}.Release|Any CPU.Build.0 = Release|Any CPU
+		{119F10C1-5DFA-4F7F-A010-7A72DC3CD98E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{119F10C1-5DFA-4F7F-A010-7A72DC3CD98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{119F10C1-5DFA-4F7F-A010-7A72DC3CD98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{119F10C1-5DFA-4F7F-A010-7A72DC3CD98E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A8FE743-A5FD-4C5F-A7AE-9FFA37E12F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A8FE743-A5FD-4C5F-A7AE-9FFA37E12F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A8FE743-A5FD-4C5F-A7AE-9FFA37E12F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A8FE743-A5FD-4C5F-A7AE-9FFA37E12F8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85170B3E-D4A5-420E-BBA8-C7D8DE8FECFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85170B3E-D4A5-420E-BBA8-C7D8DE8FECFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85170B3E-D4A5-420E-BBA8-C7D8DE8FECFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85170B3E-D4A5-420E-BBA8-C7D8DE8FECFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

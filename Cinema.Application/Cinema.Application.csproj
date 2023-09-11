@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccessLayer\Cinema.Infrastructure.csproj" />
-    <ProjectReference Include="..\LogicLayer\Cinema.Domain.csproj" />
+    <ProjectReference Include="..\Cinema.Domain\Cinema.Domain.csproj" />
   </ItemGroup>
 
 </Project>
