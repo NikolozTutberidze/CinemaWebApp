@@ -1,10 +1,10 @@
-using DataAccessLayer.Data;
-using DataAccessLayer.Repositories.Implementation;
-using DataAccessLayer.Repositories.Interfaces;
-using LogicLayer.Services.Interfaces;
-using LogicLayer.Services.Implementation;
-using Microsoft.EntityFrameworkCore;
 using CinemaApi.Middlewares;
+using Cinema.Domain.Abstracts.RepositoryAbstracts;
+using Cinema.Domain.Abstracts.ServiceAbstracts;
+using Cinema.Infrastructure.Data;
+using Cinema.Application.ServiceImplementation;
+using Cinema.Infrastructure.RepositoryImplementation;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

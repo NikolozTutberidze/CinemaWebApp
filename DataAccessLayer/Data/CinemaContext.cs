@@ -1,8 +1,9 @@
-﻿using DataAccessLayer.Models;
-using DataAccessLayer.Models.Joins;
+﻿
+using Cinema.Domain.Models;
+using Cinema.Domain.Models.Joins;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccessLayer.Data
+namespace Cinema.Infrastructure.Data
 {
     public class CinemaContext : DbContext
     {

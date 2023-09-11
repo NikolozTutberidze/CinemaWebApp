@@ -1,7 +1,7 @@
 ﻿using Azure.Core;
+using Cinema.Domain.Abstracts.ServiceAbstracts;
 using LogicLayer.Dtos;
 using LogicLayer.Services.CustomResponse;
-using LogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;

@@ -1,5 +1,5 @@
-﻿using LogicLayer.Dtos;
-using LogicLayer.Services.Interfaces;
+﻿using Cinema.Domain.Abstracts.ServiceAbstracts;
+using LogicLayer.Dtos;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
