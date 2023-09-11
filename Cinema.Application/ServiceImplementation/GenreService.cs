@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Cinema.Application.Dtos;
+using Cinema.Domain.Dtos;
 using Cinema.Application.Mappings;
 using Cinema.Domain.Abstracts.RepositoryAbstracts;
 using Cinema.Domain.Abstracts.ServiceAbstracts;
 using Cinema.Domain.CustomResponse;
 using Cinema.Domain.Models;
-using Microsoft.IdentityModel.Tokens;
 using System.Net;
+using Cinema.Domain.Models.Joins;
 
 namespace Cinema.Application.ServiceImplementation
 {

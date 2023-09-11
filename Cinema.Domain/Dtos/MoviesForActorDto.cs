@@ -1,6 +1,6 @@
-﻿namespace Cinema.Application.Dtos
+﻿namespace Cinema.Domain.Dtos
 {
-    public class MoviesForDirectorDto
+    public class MoviesForActorDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }

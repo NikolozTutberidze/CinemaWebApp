@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Cinema.Application.Dtos;
+using Cinema.Domain.Dtos;
 using Cinema.Domain.Models;
 
 namespace Cinema.Application.Mappings

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cinema.Application.Dtos
+namespace Cinema.Domain.Dtos
 {
     public class AddDirectorDto
     {

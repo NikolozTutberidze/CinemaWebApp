@@ -1,4 +1,4 @@
-﻿namespace Cinema.Application.Dtos
+﻿namespace Cinema.Domain.Dtos
 {
     public class MoviesForGenreDto
     {

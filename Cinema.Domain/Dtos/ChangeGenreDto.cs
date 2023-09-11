@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cinema.Application.Dtos
+namespace Cinema.Domain.Dtos
 {
-    public class AddGenreDto
+    public class ChangeGenreDto
     {
+        [Required]
+        public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
     }

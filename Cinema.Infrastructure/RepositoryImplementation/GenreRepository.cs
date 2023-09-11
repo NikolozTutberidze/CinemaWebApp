@@ -1,4 +1,5 @@
-﻿using Cinema.Domain.Models;
+﻿using Cinema.Domain.Abstracts.RepositoryAbstracts;
+using Cinema.Domain.Models;
 using Cinema.Domain.Models.Joins;
 using Cinema.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

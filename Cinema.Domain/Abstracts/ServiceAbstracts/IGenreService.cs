@@ -1,5 +1,5 @@
 ﻿using Cinema.Domain.CustomResponse;
-using LogicLayer.Dtos;
+using Cinema.Domain.Dtos;
 
 namespace Cinema.Domain.Abstracts.ServiceAbstracts
 {
