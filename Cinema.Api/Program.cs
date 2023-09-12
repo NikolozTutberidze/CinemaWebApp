@@ -2,8 +2,8 @@ using Cinema.Application.ServiceImplementation;
 using Cinema.Domain.Abstracts.RepositoryAbstracts;
 using Cinema.Domain.Abstracts.ServiceAbstracts;
 using Cinema.Infrastructure.Data;
-using Cinema.Infrastructure.Repositories;
-using Cinema.Infrastructure.RepositoryImplementation;
+using Cinema.Infrastructure.Repositories.Base;
+using Cinema.Infrastructure.Repositories.OldRepos;
 using CinemaApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,10 +25,10 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
-builder.Services.AddScoped<IMovieRepository, MovieRepository>()
-                .AddScoped<IDirectorRepository, DirectorRepository>()
-                .AddScoped<IGenreRepository, GenreRepository>()
-                .AddScoped<IActorRepository, ActorRepository>();
+builder.Services.AddScoped<IMovieRepository, MovieRepositoryOld>()
+                .AddScoped<IDirectorRepository, DirectorRepositoryOld>()
+                .AddScoped<IGenreRepository, GenreRepositoryOld>()
+                .AddScoped<IActorRepository, ActorRepositoryOld>();
 
 builder.Services.AddScoped<IMovieService, MovieService>()
                 .AddScoped<IDirectorService, DirectorService>()

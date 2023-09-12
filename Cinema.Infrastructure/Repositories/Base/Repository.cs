@@ -3,7 +3,7 @@ using Cinema.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Cinema.Infrastructure.Repositories
+namespace Cinema.Infrastructure.Repositories.Base
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {

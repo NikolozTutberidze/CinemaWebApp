@@ -1,51 +1,18 @@
-﻿using Cinema.Domain.Abstracts.RepositoryAbstracts;
-using Cinema.Domain.Models;
-using Cinema.Domain.Models.Joins;
+﻿using Cinema.Domain.Models;
 using Cinema.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Cinema.Infrastructure.Repositories.Base;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Cinema.Infrastructure.RepositoryImplementation
+namespace Cinema.Infrastructure.Repositories
 {
-    public class GenreRepository : IGenreRepository
+    public class GenreRepository : Repository<Genre>
     {
-        private readonly CinemaContext _database;
-        public GenreRepository(CinemaContext database)
-        {
-            _database = database;
-        }
-        public async Task AddGenreAsync(Genre request)
-        {
-            _database.Genres.Add(request);
-            await _database.SaveChangesAsync();
-        }
+        public CinemaContext Context => (_context as CinemaContext)!;
 
-        public async Task ChangeGenreAsync(Genre request)
-        {
-            _database.Genres.Update(request);
-            await _database.SaveChangesAsync();
-        }
-
-        public async Task DeleteGenreAsync(Genre request)
-        {
-            _database.Genres.Remove(request);
-            await _database.SaveChangesAsync();
-        }
-
-        public async Task<Genre> GetGenreAsync(Guid requestId)
-        {
-            var genre = await _database.Genres.FirstOrDefaultAsync(g => g.Id == requestId);
-            return genre;
-        }
-
-        public async Task<ICollection<Genre>> GetGenresAsync()
-        {
-            var genres = await _database.Genres.ToListAsync();
-            return genres;
-        }
-
-        public async Task<ICollection<MovieGenre>> GetMovieGenresAsync()
-        {
-            return await _database.MoviesGenres.ToListAsync();
-        }
+        public GenreRepository(CinemaContext context) : base(context) { }
     }
 }

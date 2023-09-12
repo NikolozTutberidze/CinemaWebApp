@@ -1,53 +1,18 @@
-﻿using Cinema.Domain.Abstracts.RepositoryAbstracts;
-using Cinema.Domain.Models;
-using Cinema.Domain.Models.Joins;
+﻿using Cinema.Domain.Models;
 using Cinema.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Cinema.Infrastructure.Repositories.Base;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Cinema.Infrastructure.RepositoryImplementation
+namespace Cinema.Infrastructure.Repositories
 {
-    public class ActorRepository : IActorRepository
+    public class ActorRepository : Repository<Actor>
     {
-        private readonly CinemaContext _database;
-        public ActorRepository(CinemaContext database)
-        {
-            _database = database;
-        }
+        public CinemaContext Context => (_context as CinemaContext)!;
 
-        public async Task AddActorAsync(Actor request)
-        {
-            _database.Actors.Add(request);
-            await _database.SaveChangesAsync();
-        }
-
-        public async Task ChangeActorAsync(Actor request)
-        {
-            _database.Actors.Update(request);
-            await _database.SaveChangesAsync();
-        }
-
-        public async Task DeleteActorAsync(Actor request)
-        {
-            _database.Actors.Remove(request);
-            await _database.SaveChangesAsync();
-        }
-
-        public async Task<Actor> GetActorAsync(Guid requestId)
-        {
-            var actor = await _database.Actors.FirstOrDefaultAsync(a => a.Id == requestId);
-            return actor;
-        }
-
-        public async Task<ICollection<MovieActor>> GetMovieActorsAsync()
-        {
-            var movieActors = await _database.MoviesActors.ToListAsync();
-            return movieActors;
-        }
-
-        public async Task<ICollection<Actor>> GetActorsAsync()
-        {
-            var actors = await _database.Actors.ToListAsync();
-            return actors;
-        }
+        public ActorRepository(CinemaContext context) : base(context) { }
     }
 }

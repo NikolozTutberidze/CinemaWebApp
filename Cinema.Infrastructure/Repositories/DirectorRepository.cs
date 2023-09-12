@@ -1,45 +1,18 @@
-﻿using Cinema.Domain.Abstracts.RepositoryAbstracts;
-using Cinema.Domain.Models;
+﻿using Cinema.Domain.Models;
 using Cinema.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Cinema.Infrastructure.Repositories.Base;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Cinema.Infrastructure.RepositoryImplementation
+namespace Cinema.Infrastructure.Repositories
 {
-    public class DirectorRepository : IDirectorRepository
+    public class DirectorRepository : Repository<Director>
     {
-        private readonly CinemaContext _database;
-        public DirectorRepository(CinemaContext database)
-        {
-            _database = database;
-        }
-        public async Task AddDirectorAsync(Director request)
-        {
-            _database.Directors.Add(request);
-            await _database.SaveChangesAsync();
-        }
+        public CinemaContext Context => (_context as CinemaContext)!;
 
-        public async Task ChangeDirectorAsync(Director request)
-        {
-            _database.Directors.Update(request);
-            await _database.SaveChangesAsync();
-        }
-
-        public async Task DeleteDirectorAsync(Director request)
-        {
-            _database.Directors.Remove(request);
-            await _database.SaveChangesAsync();
-        }
-
-        public async Task<Director> GetDirectorAsync(Guid requestId)
-        {
-            var director = await _database.Directors.FirstOrDefaultAsync(d => d.Id == requestId);
-            return director;
-        }
-
-        public async Task<ICollection<Director>> GetDirectorsAsync()
-        {
-            var directors = await _database.Directors.ToListAsync();
-            return directors;
-        }
+        public DirectorRepository(CinemaContext context) : base(context) { }
     }
 }
