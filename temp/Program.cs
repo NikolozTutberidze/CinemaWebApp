@@ -18,6 +18,8 @@ builder.Services.AddDbContext<CinemaContext>(options =>
 
 builder.Services.AddControllers();
 
+builder.Services.AddControllers();
+
 builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
