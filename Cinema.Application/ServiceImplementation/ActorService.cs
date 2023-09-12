@@ -166,7 +166,7 @@ namespace Cinema.Application.ServiceImplementation
 
             var actors = await _actorRepository.GetActorsAsync();
 
-            if (actors.IsNullOrEmpty())
+            if (actors == null || actors.Count == 0)
             {
                 response.StatusCode = HttpStatusCode.NoContent;
                 response.Message = "Actors are empty";

@@ -162,7 +162,7 @@ namespace Cinema.Application.ServiceImplementation
 
             var genres = await _repository.GetGenresAsync();
 
-            if (genres.IsNullOrEmpty())
+            if (genres == null || genres.Count == 0)
             {
                 response.StatusCode = HttpStatusCode.NoContent;
                 response.Message = "Genres are empty";

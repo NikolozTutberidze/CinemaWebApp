@@ -167,7 +167,7 @@ namespace Cinema.Application.ServiceImplementation
 
             var directors = await _repository.GetDirectorsAsync();
 
-            if (directors.IsNullOrEmpty())
+            if (directors == null || directors.Count == 0)
             {
                 response.StatusCode = HttpStatusCode.NoContent;
                 response.Message = "Directors are empty";

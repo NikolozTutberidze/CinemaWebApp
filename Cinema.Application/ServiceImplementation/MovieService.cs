@@ -455,7 +455,7 @@ namespace Cinema.Application.ServiceImplementation
 
             var movies = (await _repository.GetMoviesAsync()).Where(m => m.IMDBRate >= minRating && m.IMDBRate <= maxRating).ToList();
 
-            if (movies.IsNullOrEmpty())
+            if (movies == null || movies.Count == 0)
             {
                 response.StatusCode = HttpStatusCode.NotFound;
                 response.Message = "Movie not found";
@@ -518,7 +518,7 @@ namespace Cinema.Application.ServiceImplementation
 
             var movies = (await _repository.GetMoviesAsync()).Where(m => m.Title.ToUpper().Contains(requestTitle.ToUpper())).ToList();
 
-            if (movies.IsNullOrEmpty())
+            if (movies == null || movies.Count == 0)
             {
                 response.StatusCode = HttpStatusCode.NotFound;
                 response.Message = "Movie not found";
@@ -584,7 +584,7 @@ namespace Cinema.Application.ServiceImplementation
 
             var movies = (await _repository.GetMoviesAsync()).Where(m => Convert.ToInt32(m.Date) >= minYear && Convert.ToInt32(m.Date) <= maxYear).ToList();
 
-            if (movies.IsNullOrEmpty())
+            if (movies == null || movies.Count == 0)
             {
                 response.StatusCode = HttpStatusCode.NotFound;
                 response.Message = "Movie not found";
@@ -647,7 +647,7 @@ namespace Cinema.Application.ServiceImplementation
 
             var movies = await _repository.GetMoviesAsync();
 
-            if (movies.IsNullOrEmpty())
+            if (movies == null || movies.Count == 0)
             {
                 response.StatusCode = HttpStatusCode.NoContent;
                 response.Message = "Movies are empty";
