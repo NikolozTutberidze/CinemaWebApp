@@ -1,6 +1,8 @@
 using Cinema.Application.ServiceImplementation;
 using Cinema.Domain.Abstracts.RepositoryAbstracts;
 using Cinema.Domain.Abstracts.ServiceAbstracts;
+using Cinema.Domain.Abstracts.UnitOfWorkAbstract;
+using Cinema.Infrastructure.CinemaUnitOfWork;
 using Cinema.Infrastructure.Data;
 using Cinema.Infrastructure.Repositories.Base;
 using Cinema.Infrastructure.Repositories.OldRepos;
@@ -22,6 +24,8 @@ builder.Services.AddControllers();
 builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+builder.Services.AddScoped<ICinemaUnitOfWork, CinemaUnitOfWork>();
 
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 

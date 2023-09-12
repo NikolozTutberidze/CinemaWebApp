@@ -10,15 +10,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cinema.Infrastructure.UnitOfWork
+namespace Cinema.Infrastructure.CinemaUnitOfWork
 {
-    public class UnitOfWork : ICinemaUnitOfWork
+    public class CinemaUnitOfWork : ICinemaUnitOfWork
     {
         private readonly CinemaContext _context;
 
         #region Constructor
 
-        public UnitOfWork(CinemaContext context)
+        public CinemaUnitOfWork(CinemaContext context)
         {
             _context = context;
 
