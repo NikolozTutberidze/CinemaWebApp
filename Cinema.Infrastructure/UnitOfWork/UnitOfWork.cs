@@ -1,4 +1,5 @@
 ﻿using Cinema.Domain.Abstracts.RepositoryAbstracts;
+using Cinema.Domain.Abstracts.UnitOfWorkAbstract;
 using Cinema.Domain.Models;
 using Cinema.Infrastructure.Data;
 using Cinema.Infrastructure.Repositories;
