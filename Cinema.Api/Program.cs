@@ -2,6 +2,7 @@ using Cinema.Application.ServiceImplementation;
 using Cinema.Domain.Abstracts.RepositoryAbstracts;
 using Cinema.Domain.Abstracts.ServiceAbstracts;
 using Cinema.Infrastructure.Data;
+using Cinema.Infrastructure.Repositories;
 using Cinema.Infrastructure.RepositoryImplementation;
 using CinemaApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
@@ -22,15 +23,17 @@ builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-builder.Services.AddScoped<IMovieService, MovieService>()
-                .AddScoped<IDirectorService, DirectorService>()
-                .AddScoped<IGenreService, GenreService>()
-                .AddScoped<IActorService, ActorService>();
+builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddScoped<IMovieRepository, MovieRepository>()
                 .AddScoped<IDirectorRepository, DirectorRepository>()
                 .AddScoped<IGenreRepository, GenreRepository>()
                 .AddScoped<IActorRepository, ActorRepository>();
+
+builder.Services.AddScoped<IMovieService, MovieService>()
+                .AddScoped<IDirectorService, DirectorService>()
+                .AddScoped<IGenreService, GenreService>()
+                .AddScoped<IActorService, ActorService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
