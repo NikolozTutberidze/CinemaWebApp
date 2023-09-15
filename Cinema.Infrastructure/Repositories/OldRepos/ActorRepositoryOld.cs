@@ -4,12 +4,12 @@ using Cinema.Domain.Models.Joins;
 using Cinema.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cinema.Infrastructure.RepositoryImplementation
+namespace Cinema.Infrastructure.Repositories.OldRepos
 {
-    public class ActorRepository : IActorRepository
+    public class ActorRepositoryOld : IActorRepository
     {
         private readonly CinemaContext _database;
-        public ActorRepository(CinemaContext database)
+        public ActorRepositoryOld(CinemaContext database)
         {
             _database = database;
         }
