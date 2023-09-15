@@ -1,0 +1,102 @@
+IF NOT EXISTS (
+	SELECT schema_name
+	FROM information_schema.schemata
+	WHERE schema_name = 'Cinema'
+)
+BEGIN
+    EXEC('CREATE SCHEMA Cinema;')
+END
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM INFORMATION_SCHEMA.TABLES
+    WHERE TABLE_SCHEMA = 'Cinema' AND TABLE_NAME = 'Director'
+) 
+BEGIN
+    CREATE TABLE Cinema.Director
+(
+	Id int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	FirstName NVARCHAR(50) NULL,
+	LastName NVARCHAR(50) NULL,
+	BirthDate DATE NULL,
+	Origin NVARCHAR(50) NULL
+)
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM INFORMATION_SCHEMA.TABLES
+    WHERE TABLE_SCHEMA = 'Cinema' AND TABLE_NAME = 'Actor'
+) 
+BEGIN
+    CREATE TABLE Cinema.Actor
+(
+	Id int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	FirstName NVARCHAR(50) NULL,
+	LastName NVARCHAR(50) NULL,
+	BirthDate DATE NULL,
+	Origin NVARCHAR(50) NULL
+)
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM INFORMATION_SCHEMA.TABLES
+    WHERE TABLE_SCHEMA = 'Cinema' AND TABLE_NAME = 'Genre'
+) 
+BEGIN
+    CREATE TABLE Cinema.Genre
+(
+	Id int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	Name NVARCHAR(50) NULL
+)
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM INFORMATION_SCHEMA.TABLES
+    WHERE TABLE_SCHEMA = 'Cinema' AND TABLE_NAME = 'Movie'
+) 
+BEGIN
+    CREATE TABLE Cinema.Movie
+(
+	Id int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	Title NVARCHAR(50) NULL,
+	ReleaseDate DATE NULL,
+	ImdbRate DOUBLE PRECISION NULL,
+	Review NVARCHAR(MAX) NULL,
+	DirectorId int NOT NULL FOREIGN KEY REFERENCES Cinema.Director(Id),
+)
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM INFORMATION_SCHEMA.TABLES
+     WHERE TABLE_SCHEMA = 'Cinema' AND TABLE_NAME = 'MovieGenre'
+) 
+BEGIN
+    CREATE TABLE Cinema.MovieGenre
+(
+	MovieId int NOT NULL,
+	GenreId int NOT NULL,
+	PRIMARY KEY(MovieId, GenreId),
+	FOREIGN KEY(MovieId) REFERENCES Cinema.Movie(Id),
+	FOREIGN KEY(GenreId) REFERENCES Cinema.Genre(Id)
+)
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM INFORMATION_SCHEMA.TABLES
+    WHERE TABLE_SCHEMA = 'Cinema' AND TABLE_NAME = 'MovieActor'
+) 
+BEGIN
+    CREATE TABLE Cinema.MovieActor
+(
+	MovieId int NOT NULL,
+	ActorId int NOT NULL,
+	PRIMARY KEY(MovieId, ActorId),
+	FOREIGN KEY(MovieId) REFERENCES Cinema.Movie(Id),
+	FOREIGN KEY(ActorId) REFERENCES Cinema.Actor(Id)
+)
+END;
