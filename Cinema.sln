@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cinema.Infrastructure", "Ci
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cinema.Domain", "Cinema.Domain\Cinema.Domain.csproj", "{3A8FE743-A5FD-4C5F-A7AE-9FFA37E12F8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cinema.Api", "Cinema.Api\Cinema.Api.csproj", "{1ABFB26F-4B87-4711-B901-A93B508924FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cinema.Api", "Cinema.Api\Cinema.Api.csproj", "{1ABFB26F-4B87-4711-B901-A93B508924FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlQueries", "SqlQueries", "{E41408CA-3F23-4F17-80EF-1822C5A5E9FF}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Documents\SQL Server Management Studio\CinemaSqlQueries.sql = ..\..\..\..\Documents\SQL Server Management Studio\CinemaSqlQueries.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
