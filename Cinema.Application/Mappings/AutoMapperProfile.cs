@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Cinema.Domain.Dtos;
-using Cinema.Domain.Models;
 
 namespace Cinema.Application.Mappings
 {
@@ -8,22 +6,22 @@ namespace Cinema.Application.Mappings
     {
         public AutoMapperProfile()
         {
-            CreateMap<AddMovieDto, Movie>();
-            CreateMap<ChangeMovieDto, Movie>();
-            CreateMap<Movie, MovieDto>();
+            //CreateMap<AddMovieDto, MovieOld>();
+            //CreateMap<ChangeMovieDto, MovieOld>();
+            //CreateMap<MovieOld, MovieDto>();
 
-            CreateMap<AddGenreDto, Genre>();
-            CreateMap<Genre, GenreDto>();
-            CreateMap<ChangeGenreDto, Genre>();
+            //CreateMap<AddGenreDto, GenreOld>();
+            //CreateMap<GenreOld, GenreDto>();
+            //CreateMap<ChangeGenreDto, GenreOld>();
 
-            CreateMap<AddDirectorDto, Director>();
-            CreateMap<Director, DirectorDto>();
-            CreateMap<ChangeDirectorDto, Director>();
-            CreateMap<Director, DirectorDtoForMovies>();
+            //CreateMap<AddDirectorDto, DirectorOld>();
+            //CreateMap<DirectorOld, DirectorDto>();
+            //CreateMap<ChangeDirectorDto, DirectorOld>();
+            //CreateMap<DirectorOld, DirectorDtoForMovies>();
 
-            CreateMap<AddActorDto, Actor>();
-            CreateMap<Actor, ActorDto>();
-            CreateMap<ChangeActorDto, Actor>();
+            //CreateMap<AddActorDto, ActorOld>();
+            //CreateMap<ActorOld, ActorDto>();
+            //CreateMap<ChangeActorDto, ActorOld>();
         }
     }
 }

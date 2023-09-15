@@ -1,0 +1,3 @@
+Scaffold-DbContext "Data Source=CAPP-A0280\SQLEXPRESS;Initial Catalog=CinemaDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities -ContextDir Data -Context CinemaContext -Force
+
+-Project

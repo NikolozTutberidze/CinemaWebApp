@@ -8,7 +8,7 @@ namespace Cinema.Domain.Abstracts.UnitOfWorkAbstract
 {
     public interface IUnitOfWork : IDisposable
     {
-        int Complete();
-        Task<int> CompleteAsync(CancellationToken cancellationToken);
+        //int Complete();
+        //Task<int> CompleteAsync(CancellationToken cancellationToken);
     }
 }
