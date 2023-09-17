@@ -5,7 +5,7 @@ namespace Cinema.Domain.Models
     public class Actor
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         [MaxLength(50)]
         public string? FirstName { get; set; }
         [MaxLength(50)]

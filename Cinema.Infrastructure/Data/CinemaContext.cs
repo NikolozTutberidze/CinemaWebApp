@@ -1,18 +1,20 @@
 ﻿
 using Cinema.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Cinema.Infrastructure.Data
 {
     public class CinemaContext : DbContext
     {
+        private readonly IConfiguration _configuration;
         public CinemaContext()
         {
 
         }
-        public CinemaContext(DbContextOptions<CinemaContext> options) : base(options)
+        public CinemaContext(DbContextOptions<CinemaContext> options, IConfiguration configuration) : base(options)
         {
-
+            _configuration = configuration;
         }
 
         public DbSet<Movie> Movies { get; set; }
@@ -21,6 +23,15 @@ namespace Cinema.Infrastructure.Data
         public DbSet<Actor> Actors { get; set; }
         public DbSet<MovieActor> MoviesActors { get; set; }
         public DbSet<MovieGenre> MoviesGenres { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+                //optionsBuilder.UseSqlServer("Data Source=DESKTOP-K61LELU\\SQLEXPRESS;Initial Catalog=Cinema;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
