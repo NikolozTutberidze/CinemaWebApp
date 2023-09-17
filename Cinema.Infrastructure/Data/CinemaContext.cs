@@ -1,6 +1,5 @@
 ﻿
 using Cinema.Domain.Models;
-using Cinema.Domain.Models.Joins;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.Infrastructure.Data
@@ -26,29 +25,60 @@ namespace Cinema.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Movie>()
+                .ToTable("Movies", "movie")
                 .HasOne(m => m.Director)
                 .WithMany(d => d.Movies)
                 .HasForeignKey(m => m.DirectorId);
 
-            modelBuilder.Entity<MovieActor>().HasKey(ma => new { ma.MovieId, ma.ActorId });
-            modelBuilder.Entity<MovieActor>()
-                .HasOne(ma => ma.Movie)
-                .WithMany(m => m.MoviesActors)
-                .HasForeignKey(ma => ma.MovieId);
-            modelBuilder.Entity<MovieActor>()
-                .HasOne(ma => ma.Actor)
-                .WithMany(a => a.MoviesActors)
-                .HasForeignKey(ma => ma.ActorId);
+            modelBuilder.Entity<Movie>()
+                .HasMany(m => m.Actors)
+                .WithMany(a => a.Movies)
+                .UsingEntity<MovieActor>(
+                    j => j
+                        .HasOne(ma => ma.Actor)
+                        .WithMany()
+                        .HasForeignKey(ma => ma.ActorId),
+                    j => j
+                        .HasOne(ma => ma.Movie)
+                        .WithMany()
+                        .HasForeignKey(ma => ma.MovieId),
+                    j =>
+                    {
+                        j.ToTable("MovieActors", "movie");
+                        j.HasKey(ma => new { ma.MovieId, ma.ActorId });
+                    });
 
-            modelBuilder.Entity<MovieGenre>().HasKey(mg => new { mg.MovieId, mg.GenreId });
-            modelBuilder.Entity<MovieGenre>()
-                .HasOne(mg => mg.Movie)
-                .WithMany(m => m.MoviesGenres)
-                .HasForeignKey(mg => mg.MovieId);
-            modelBuilder.Entity<MovieGenre>()
-                .HasOne(mg => mg.Genre)
-                .WithMany(g => g.MoviesGenres)
-                .HasForeignKey(mg => mg.GenreId);
+            modelBuilder.Entity<Movie>()
+                .HasMany(m => m.Genres)
+                .WithMany(g => g.Movies)
+                .UsingEntity<MovieGenre>(
+                    j => j
+                        .HasOne(mg => mg.Genre)
+                        .WithMany()
+                        .HasForeignKey(mg => mg.GenreId),
+                    j => j
+                        .HasOne(mg => mg.Movie)
+                        .WithMany()
+                        .HasForeignKey(mg => mg.MovieId),
+                    j =>
+                    {
+                        j.ToTable("MovieGenres", "movie");
+                        j.HasKey(mg => new { mg.MovieId, mg.GenreId });
+                    });
+
+            modelBuilder.Entity<Movie>()
+                .HasOne(m => m.Director)
+                .WithMany(d => d.Movies)
+                .HasForeignKey(m => m.DirectorId);
+
+            modelBuilder.Entity<Director>()
+                .ToTable("Directors", "movie");
+
+            modelBuilder.Entity<Genre>()
+                .ToTable("Genres", "movie");
+
+            modelBuilder.Entity<Actor>()
+                .ToTable("Actors", "movie");
         }
     }
 }

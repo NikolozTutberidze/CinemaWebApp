@@ -3,12 +3,6 @@ using Cinema.Domain.Abstracts.UnitOfWorkAbstract;
 using Cinema.Domain.Models;
 using Cinema.Infrastructure.Data;
 using Cinema.Infrastructure.Repositories;
-using Cinema.Infrastructure.Repositories.OldRepos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cinema.Infrastructure.CinemaUnitOfWork
 {

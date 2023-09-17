@@ -1,11 +1,14 @@
-﻿using Cinema.Domain.Models.Joins;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Cinema.Domain.Models
 {
     public class Genre
     {
+        [Key]
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public List<MovieGenre> MoviesGenres { get; set; }
+        [MaxLength(50)]
+        public string? Name { get; set; }
+
+        public ICollection<Movie> Movies { get; set; }
     }
 }

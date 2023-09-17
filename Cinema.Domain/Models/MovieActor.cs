@@ -1,10 +1,11 @@
-﻿namespace Cinema.Domain.Models.Joins
+﻿namespace Cinema.Domain.Models
 {
     public class MovieActor
     {
-        public Guid MovieId { get; set; }
+        public int MovieId { get; set; }
         public Movie Movie { get; set; }
-        public Guid ActorId { get; set; }
+
+        public int ActorId { get; set; }
         public Actor Actor { get; set; }
     }
 }

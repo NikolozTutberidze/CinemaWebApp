@@ -1,17 +1,23 @@
-﻿using Cinema.Domain.Models.Joins;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cinema.Domain.Models
 {
     public class Movie
     {
-        public Guid Id { get; set; }
-        public string Title { get; set; }
-        public string Date { get; set; }
+        [Key]
+        public int Id { get; set; }
+        [MaxLength(100)]
+        public string? Title { get; set; }
+        public DateTime? ReleaseDate { get; set; }
         public double IMDBRate { get; set; }
         public string Review { get; set; }
-        public Guid DirectorId { get; set; }
+        public int DirectorId { get; set; }
+
+        [ForeignKey("DirectorId")]
         public Director Director { get; set; }
-        public List<MovieActor> MoviesActors { get; set; }
-        public List<MovieGenre> MoviesGenres { get; set; }
+
+        public ICollection<Actor> Actors { get; set; }
+        public ICollection<Genre> Genres { get; set; }
     }
 }
