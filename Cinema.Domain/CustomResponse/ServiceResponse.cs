@@ -9,8 +9,31 @@ namespace Cinema.Domain.CustomResponse
 {
     public class ServiceResponse<T>
     {
-        public T? Data { get; set; }
-        public HttpStatusCode StatusCode { get; set; }
-        public string? Message { get; set; }
+        public bool? Success { get; set; } = false;
+        public bool? ErrorOccured { get; set; } = null;
+        public string? ErrorMessage { get; set; } = null;
+
+        public T? Data { get; set; } = default(T);
+
+
+        public static ServiceResponse<T> SuccessResult(T? data)
+        {
+            return new ServiceResponse<T>()
+            {
+                Success = true,
+                ErrorOccured = false,
+                Data = data
+            };
+        }
+
+        public static ServiceResponse<T> ErrorResult(string? error)
+        {
+            return new ServiceResponse<T>()
+            {
+                Success = false,
+                ErrorOccured = true,
+                ErrorMessage = error ?? "Unexpected error occured"
+            };
+        }
     }
 }
